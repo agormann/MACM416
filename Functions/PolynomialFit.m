@@ -31,8 +31,7 @@ for degree = 1 : maxDegree-1
     
     predictedY = polyval(polyCoeff, xData);
     SSE = sum( (yData - predictedY).^2 ); % sum of squared errors
-    squaredR = 1 - SSE/TSS; % coeff of determination
-    adjustedR = 1 - (1-squaredR) * (n-1) / (n-degree-1);
+    adjustedR = 1 - SSE/TSS * (n-1) / (n-degree-1);
 
     models{degree, 1} = polyCoeff; % store coeffs
     models{degree, 2} = adjustedR; % store parameter
