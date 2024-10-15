@@ -4,7 +4,7 @@
 % example 1: 1st order wave equation u_t= cu_x
 % example 2: Heat equation, u_t = cu_xx
 % example 3: Schrodinger equation, u_t = icu_xx
-clear all, clc,clf
+clear; clc; clf;
 %% Problem specification
 % x in [-M,M], x_0=-M, x_{N+1}=M
 % Due to periodic boundary conditions we don't need x_0
@@ -44,7 +44,7 @@ InitialVector=phi(xgrid)';
 wave=@(t,Y)(c*SD*Y);
 solwave=ode23(@(t,y)wave(t,y),[0,20],InitialVector);
 figure(2), hold on,
-for j=0:5
+for j=0:0
 plot(xgrid,deval(solwave,j),'LineWidth',2),
 end
 legend('t=0','t=1','t=2','t=3','t=4','t=5')
