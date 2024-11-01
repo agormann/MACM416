@@ -1,0 +1,49 @@
+// Parameters
+real theta = 2.*pi;
+real radius = 1;
+real L = 4;
+int squarePts = 100;
+int circlePts = 100;
+int meshSize = 100;
+int tempC0 = 20;
+int tempC1 = 60;
+
+// no idea what these guys do LOL
+int C0 = 97;
+int C1 = 99;
+int C2 = 98;
+
+// Creating borders
+// C0 : square of sidelength 4, centered at (0,0), counterclockwise
+border C0R(t = 0., 1.){x = -L/2 + L*t; y = -L/2;       label = C0;}
+border C0B(t = 0., 1.){x =  L/2;       y = -L/2 + L*t; label = C0;}
+border C0L(t = 0., 1.){x =  L/2 - L*t; y =  L/2;       label = C0;}
+border C0T(t = 0., 1.){x = -L/2;       y =  L/2 - L*t; label = C0;}
+// C1 : circle of radius 1, centered at (1,1), clockwise
+border C1C(t = 0., theta){x = radius*sin(t) + 1; y = radius*cos(t) + 1; label = C1;}
+// C2 : circle of radius 1, centered at (-1,-1), counterclockwise
+border C2C(t = 0., theta){x = radius*cos(t) - 1; y = radius*sin(t) - 1; label = C2;}
+// Plotting borders
+plot(
+    C0R(squarePts) + C0B(squarePts) + C0L(squarePts) + C0T(squarePts) + C1C(circlePts) + C2C(circlePts),
+    wait = true
+);
+
+// Creating mesh
+mesh Th = buildmesh(
+    C0R(meshSize) + C0B(meshSize) + C0L(meshSize) + C0T(meshSize) +
+    C1C(meshSize) + C2C(meshSize)
+);
+// Plotting mesh
+plot(Th, wait = true, ps = "HeatExchangerMesh.eps");
+
+// Fespace
+fespace Vh(Th, P1);
+Vh u, v;
+Vh kappa = 1 + 2*(x<-1)*(x>-2)*(y<3)*(y>-3);
+
+// Solve
+solve a(u, v)
+    = int2d(Th)(kappa*(dx(u)*dx(v)+ dy(u)*dy(v))) + on(C0, u = tempC0) + on(C1, u = tempC1);
+// Plotting solution
+plot(u, wait = true, value = true, fill = true, ps = "HeatExchangerSoln.eps");
