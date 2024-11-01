@@ -9,7 +9,7 @@ M=pi
 %test  data for differentiation.
 
 phi=@(x) (-cos(x)); true=@(x)(cos(x));
-phi=@(x)(cos(2*x)); true=@(x)(-4*cos(2*x));
+% phi=@(x)(cos(2*x)); true=@(x)(-4*cos(2*x));
 
 figure(1),hold on
 
