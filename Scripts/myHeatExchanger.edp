@@ -40,7 +40,9 @@ plot(Th, wait = true, ps = "HeatExchangerMesh.eps");
 // Fespace
 fespace Vh(Th, P1);
 Vh u, v;
-Vh kappa = 1 + 2*(x<-1)*(x>-2)*(y<3)*(y>-3);
+// Slightly inaccurate, we want a circle, but i have made a square :(
+// do not really know how to make the conduction spherical, oh well
+Vh kappa = 1 + 2*(x<0)*(x>-2)*(y<0)*(y>-2);
 
 // Solve
 solve a(u, v)
