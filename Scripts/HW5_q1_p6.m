@@ -13,7 +13,7 @@ tf = 10^4;
 dt = dx/4; % size of dt vs. dx depends on method
 nt = tf/dt; % this is not an integer!
 nt = nx*ceil(nt/nx); % nt is an integer, and a multiple of nx (useful for plotting)
-dt = tf/nt; % dt is still 4x smaller than dx
+dt = tf/nt; % dt is still smaller than dx
 
 c = 0.2 + sin(X-1).^2; % variable coefficient
 k = [0:nx/2-1 0 -nx/2+1:-1]; % wave numbers
